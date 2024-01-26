@@ -1,0 +1,10 @@
+Este trabalho é similar ao trabalho que vimos no R, porém usando o Python.
+
+O objetivo principal é submeter um código em Python (ou notebook Python) que realize as tarefas abaixo mencionadas. Cada tarefa cumprida aumenta a nota da avaliação. Quanto ao banco de dados, ele é aleatório e vai ser diferente para cada pessoa. No entanto, os objetivos são os mesmos e a pontuação segue abaixo:
+
+(5 pontos) É entregue um código funcional em que 40% dos dados (120) seja selecionada segundo uma amostragem aleatória simples sem reposição [MUITO IMPORTANTE VERIFICAREM QUE O PROGRAMA RODE ANTES DE SUBMETER];
+(1 ponto) Nomear os vendedores e vendedoras de acordo com o banco de dados vendedores. Em todas as tabelas/bancos gerados, tem de constar o nome dos vendedores. Caso o nome não esteja listado, colocar como Desconhecido ou Não Informado ou NI (apenas uma destas)e agrupá-los em um único grupo. Há mais vendedores e vendedoras dos que os listados no banco vendedores;
+(1 ponto) Ordenar os vendedores e vendedoras de acordo com a quantidade vendida (NOTE QUE É PRECISO AGRUPAR OS VENDEDORES E VENDEDORAS PELO TOTAL DA VARIÁVEL vendas);
+(1 ponto) Ordenar os vendedores e vendedoras de acordo com o valor das vendas (NOTE QUE É PRECISO AGRUPAR OS VENDEDORES E VENDEDORAS PELO TOTAL DA VARIÁVEL valor);
+(1 ponto) Nomear as empresas de acordo com o banco de dados empresa. Em todas as tabelas/bancos gerados, tem de constar o nome das empresas. Caso o nome não esteja listado, colocar como Desconhecido ou Não Informado ou NI (apenas uma destas) e agrupá-los em um único grupo. Há mais empresas do que as listadas no banco de dados empresa;
+(1 ponto) Ordenar as empresas de acordo com o valor das vendas (NOTE QUE É PRECISO AGRUPAR AS EMPRESAS PELO TOTAL DA VARIÁVEL valor);
