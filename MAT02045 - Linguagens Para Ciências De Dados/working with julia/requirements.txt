@@ -1,0 +1,6 @@
+(5 pontos) É entregue um código funcional em que pelo menos uma tarefa abaixo é executada;
+(1 ponto) Apresentar uma tabela resumo agrupada pelos dias de semana de acordo com o valor (NOTE QUE É PRECISO AGRUPAR OS DIAS PELO TOTAL DA VARIÁVEL valor);
+(1 ponto) Criar a variável mês (pode ser o número do mês, nome, abreviação);
+(1 ponto) Criar a variável tempo, contando quanto tempo se passou desde a venda (quantos dias desde a data registrada até o dia atual);
+(1 ponto) Listar todas as pessoas que venderam acima de 35 unidades (variável unid). CUIDADO: caso algum nome esteja repetido, não deve constar mais de uma vez;
+(1 ponto) Listar os estados pelo valor gerado (NOTE QUE É PRECISO AGRUPAR OS ESTADOS PELO TOTAL DA VARIÁVEL valor);
