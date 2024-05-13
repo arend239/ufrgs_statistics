@@ -1,4 +1,24 @@
-def factores(x): # return a list with prime factors of x
+#
+# return if x is a prime number
+#
+
+def is_prime(x): 
+	
+    if x < 2 or ((x % 2 == 0) and x != 2): 
+        return False
+		
+    for i in range(2, (x // 2) + 1): 
+        
+    	if x % i == 0: 
+    		return False
+
+    return True
+	
+# 
+# return a list with prime factors of x
+#
+
+def factors(x): 
     
     prime_fact = []
     while x % 2 == 0:
@@ -16,33 +36,29 @@ def factores(x): # return a list with prime factors of x
         
     return prime_fact 
 
-def is_prime(x): # return if the input is a prime number
-	
-    if x < 2 or (x % 2 == 0) and x != 2: 
-        return False
-		
-    for i in range(2, (x // 2) + 1): 
-        
-    	if x % i == 0: 
-    		return False
+#
+# return the least common multiple
+#
 
-    return True
-
-def lcm(x,y): # return the least common multiple
+def lcm(x,y): 
     
-    bigger = max(x,y)
+    c_mult = max(x,y)
         
     while True:
         
-        if bigger % x == 0 and bigger % y == 0:
-            return(bigger)
+        if c_mult % x == 0 and c_mult % y == 0:
+            return(c_mult)
             break
         
-        bigger += 1
+        c_mult += 1
 
-def gdc(x,y): # return the greatest common divisor
+#
+# return the greatest common divisor
+#
+
+def gdc(x,y): 
     
     if y == 0:
         return x
     else:
-        return mdc(y, (x % y))
+        return gdc(y, (x % y))
