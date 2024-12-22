@@ -1,0 +1,131 @@
+---
+title: "Atividade 7 - Inferência B"
+author: "João Arend - 00577787"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+set.seed(577787)
+library(readxl)
+library(ggplot2)
+```
+
+1 - No banco de dados do professor;
+    - testar se o tempo das músicas antigas é o mesmo das atuais ($\alpha = 0.05$);
+    - forneça o p-valor e a interpretação.
+2 - Fazer a própria pesquisa (n = 10 para cada época). Usar $alplha = 0.05%.
+    - Reportar o p-valor do teste.
+
+```{r 1}
+
+dados <- read_excel("musicas_anos80_e_recentes.xlsx")
+
+anos_80  <- dados$`Duração (segundos)`[dados$Ano < 1990]
+recentes <- dados$`Duração (segundos)`[dados$Ano > 1990]
+
+var_test <- var.test(anos_80, recentes)
+
+if (var_test$p.value > 0.05) {
+    vars <- "iguais"
+} else {
+    vars <- "diferentes"
+}
+
+t_test   <- t.test(anos_80, recentes, var.equal = var_test$p.value > 0.05)
+
+cat("Teste de variâncias (F-test):\n")
+cat("Estatística F:", var_test$statistic, "\n")
+cat("Pvalor:", var_test$p.value, "\n")
+cat("Portando as variâncias podem ser tratadas como ", vars, "\n\n")
+
+cat("Teste t de Student:\n")
+cat("Estatística t:", t_test$statistic, "\n")
+cat("Pvalor:", t_test$p.value, "\n")
+```
+
+Com esses resultados podemos rejeitar a $H_0$, ou seja, temos justificativa para concluir que os tempos devem diferir significativamente.
+
+```{r 2data, include=FALSE}
+
+before_1980s <- data.frame(
+  nome = c(
+    "Over the Rainbow",
+    "Sing, Sing, Sing",
+    "Ever Changin'Times",
+    "Sweet Home Alabama",
+    "Stand by Me",
+    "Oh! Pretty Woman",
+    "Rock Around the Clock",
+    "Johnny B. Goode",
+    "Can’t Help Falling in Love",
+    "What a Wonderful World"
+  ),
+  segundos = c(
+    163,  # Over the Rainbow
+    324,  # Sing, Sing, Sing
+    224,  # Ever Changin'Times
+    284,  # Sweet Home Alabama
+    180,  # Stand by Me
+    177,  # Oh! Pretty Woman
+    150,  # Rock Around the Clock
+    199,  # Johnny B. Goode
+    181,  # Can’t Help Falling in Love
+    140   # What a Wonderful World
+  )
+)
+
+after_2000s <- data.frame(
+  nome = c(
+    "Poker Face",
+    "Feel Good Inc.",
+    "Back to Black",
+    "Stan",
+    "Rehab",
+    "Lose yourself",
+    "Hurt",
+    "Yellow",
+    "Viva La Vida",
+    "Numb"
+  ),
+  segundos = c(
+    237, # Poker Face
+    222, # Feel Good Inc.
+    240, # Back to Black
+    404, # Stan
+    214, # Rehab
+    322, # Lose yourself
+    216, # Hurt
+    266, # Yellow
+    242, # Viva La Vida
+    187  # Numb
+  )
+)
+```
+
+### Com amostra feita via pesquisa;
+```{r 2}
+
+anos_80  <- before_1980s$segundos
+recentes <- after_2000s$segundos
+
+var_test <- var.test(anos_80, recentes)
+
+if (var_test$p.value > 0.05) {
+    vars <- "iguais"
+} else {
+    vars <- "diferentes"
+}
+
+t_test   <- t.test(anos_80, recentes, var.equal = var_test$p.value > 0.05)
+
+cat("Teste de variâncias (F-test):\n")
+cat("Estatística F:", var_test$statistic, "\n")
+cat("Pvalor:", var_test$p.value, "\n")
+cat("Portando as variâncias podem ser tratadas como ", vars, "\n\n")
+
+cat("Teste t de Student:\n")
+cat("Estatística t:", t_test$statistic, "\n")
+cat("Pvalor:", t_test$p.value, "\n")
+```
+Neste caso como p-valor > 0.05, não rejeitamos a hipótese nula, ou seja, o tempo das músicas não devem ser significativamente diferentes.

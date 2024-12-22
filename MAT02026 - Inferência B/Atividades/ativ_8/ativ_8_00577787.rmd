@@ -1,0 +1,93 @@
+---
+title: "Atividade 8 - Inferência B"
+author: "João Arend - 00577787"
+output: html_document
+---
+
+Implementação do teste da razão de verossimilhança generalizado (TRGV) para o modelo Gamma.
+
+f.d.p da função gamma; 
+$$
+\frac{1}{\Gamma(k)\theta^k}x^{k-1}e^{\frac{-x}{\theta}}
+$$
+
+Testar;
+$$
+H_0: k=2 \\
+H1:  k \neq 2
+$$
+
+```{r}
+
+library(stats4)
+set.seed(577787)
+
+n     <- 42
+alpha <- 0.05
+k     <- 2
+theta <- 3
+
+log_vss <- function(k, theta, data) {
+  
+  n <- length(data)
+  
+  if (k <= 0 || theta <= 0) return(-Inf)
+  
+  logL <- -n * lgamma(k) - n * k * log(theta) + (k - 1) * sum(log(data)) - sum(data) / theta
+  
+  return(logL)
+}
+
+fit_h0 <- function(data) {
+  
+  neg_log_vss<- function(theta) {
+    -log_vss(k = 2, theta = theta, data = data)
+  }
+  
+  result <- optimize(neg_log_vss, 
+                    interval = c(1e-6, max(data)))
+  
+  return(list(logL  = -result$objective, 
+              theta = result$minimum))
+}
+
+fit_h1 <- function(data) {
+  
+  neg_log_vss <- function(params) {
+    
+    k     <- params[1]
+    theta <- params[2]
+    -log_vss(k = k, theta = theta, data = data)
+  }
+  
+  result <- optim(par    = c(1, mean(data)), 
+                  fn     = neg_log_vss,
+                  method = "L-BFGS-B",
+                  lower = c(1e-6, 1e-6))
+  
+    return(list(logL   = -result$value, 
+              params = result$par))
+}
+
+data <- rgamma(n = 42, shape = k, scale = theta)
+
+h0_res <- fit_h0(data)
+h1_res <- fit_h1(data)
+
+test_stat <- -2 * (h0_res$logL - h1_res$logL)
+p_value   <- 1 - pchisq(test_stat, df = 1)
+
+
+cat("Estatística do teste:\n")
+test_stat
+cat("p-valor:\n")
+p_value
+
+if (p_value < alpha) {
+  cat("Rejeitamos H0: Evidência para k ≠ 2.\n")
+} else {
+  cat("Não rejeitamos H0: Não há evidência suficiente para k ≠ 2.\n")
+}
+
+
+```

@@ -1,0 +1,113 @@
+---
+title: "Atividade 5 - Inferência B"
+author: ""
+date: "2024-11-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+library(ggplot2)
+
+```
+
+## Exemplo 6.6.4 Casella
+
+### Forma teórica
+
+Implementar uma função que calcule o poder do teste para testar $H_0$: $\sigma^2$ = 8 vs $H_1$: $S^2$ = 10  
+Em seguida, mudar os valores de $\sigma_1^2$ (8.1, 8.2, 8.3, ...)  
+Fazer um gráfico do poder para cada $\sigma_1^2$  
+
+```{r}
+n     <- 10 
+alpha <- 0.1
+k     <- 127
+
+# Poder do teste H0
+sigma_0 <- 8 
+beta_0  <- pchisq((k/sigma_0), n)
+poder_0 <- 1 - beta_0
+
+# Poder do teste H1
+sigma_1 <- 10
+beta_1  <- pchisq((k/sigma_1), n)
+poder_1 <- 1 - beta_1
+
+# Mudando valores de sigma
+vetor         <- seq(8, 45, 0.1)
+poder_teorico <-  c()
+
+for (i in 1:length(vetor)){
+  
+  beta             <- pchisq((k/vetor[i]), n)
+  poder_teorico[i] <- 1 - beta
+}
+
+plot(vetor, poder_teorico, col = 'blue')
+
+```
+
+### Forma empírica
+
+var1 = {8.1, 8.2, ..., 20}
+Gerar dados de uma normal (5, var1)
+Fazer o teste: verificar se $\sum(x_i - 5)^2 > 127$
+Anotar 1000x
+Estimar $P(rejeitar H_0)$
+
+```{r}
+n     <- 10
+alpha <- 0.1
+k     <- 127
+mu    <- 5
+
+# Estimando alpha
+var   <- 8
+poder <- c()
+
+for (i in 1:1000){
+  
+  x        <- rnorm(n, mu, sqrt(var))
+  poder[i] <- sum((x - mu)^2) >= 127
+}
+
+# Poder
+var1           <- seq(8,45,0.1)
+poder_empirico <- c()
+
+for(i in 1:length(var1)){
+  
+  p <- c()
+  for (j in 1:1000){
+    
+    x    <- rnorm(n, mu, sqrt(var1[i]))
+    p[j] <- sum((x - mu)^2) >= 127
+  }
+  poder_empirico[i] <- mean(p)
+}
+
+plot(var1,poder_empirico, col = 'red', type = 'l')
+
+```
+
+## Teórico vs Empírico
+```{r}
+
+df <- data.frame(
+  sig2  = c(vetor, var1),
+  power = c(poder_teorico, poder_empirico),
+  type  = rep(c("Teórico", "Empírico"), each = length(vetor))
+)
+
+ggplot(df, aes(x = sig2, y = power, color = type)) +
+  geom_line(size = 1) +
+  labs(
+    x     = "Variância",
+    y     = "Poder",
+    color = "Tipo"
+  ) +
+  theme_minimal() 
+
+```
+
