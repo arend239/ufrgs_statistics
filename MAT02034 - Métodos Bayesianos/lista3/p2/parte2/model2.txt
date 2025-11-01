@@ -1,0 +1,9 @@
+# Modelo (ii):
+model {
+  for (i in 1:m) {
+    y[i] ~ dpois(mu[i])
+    mu[i] <- alpha * n[i] * d[i]
+  }
+
+  alpha ~ dgamma(alpha_a, alpha_b)
+}

@@ -1,0 +1,11 @@
+# Modelo (i):
+model {
+  for (i in 1:m) {
+    y[i] ~ dpois(mu[i])
+    log(mu[i]) <- beta0 + beta1 * log(n[i]) + beta2 * log(d[i])
+  }
+
+  beta0 ~ dnorm(b_mean, b_prec)
+  beta1 ~ dnorm(b_mean, b_prec)
+  beta2 ~ dnorm(b_mean, b_prec)
+}

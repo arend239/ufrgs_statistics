@@ -1,0 +1,11 @@
+# Modelo (iii-b/c):
+model {
+  for (i in 1:m) {
+    y[i] ~ dpois(mu[i])
+    mu[i] <- n[i] * (alpha0 + alpha1 * d[i] + alpha2 * pow(d[i], 2))
+  }
+
+  alpha0 ~ dgamma(alpha_a, alpha_b)
+  alpha1 ~ dgamma(alpha_a, alpha_b)
+  alpha2 ~ dgamma(alpha_a, alpha_b)
+}

@@ -1,0 +1,11 @@
+# Modelo (iii-a):
+model {
+  for (i in 1:m) {
+    y[i] ~ dpois(mu[i])
+    mu[i] <- n[i] * (alpha0 + alpha1 * d[i] + alpha2 * pow(d[i], 2))
+  }
+
+  alpha0 ~ dnorm(b_mean, b_prec)
+  alpha1 ~ dnorm(b_mean, b_prec)
+  alpha2 ~ dnorm(b_mean, b_prec)
+}
